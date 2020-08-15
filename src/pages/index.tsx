@@ -6,8 +6,8 @@ import SEO from "../components/seo";
 
 const drinks: Record<string, { title: string; content: React.ReactNode }> = {
   junglebird: {
-    title: "Frozen Jungle Bird",
-    content: <div>Pot still Jamaican rum, Campari, Pineapple, Lime</div>,
+    title: "Jungle Bird",
+    content: <div>Pot still jamaican rum, Campari, pineapple, lime</div>,
   },
   threedots: {
     title: "Three Dots and a Dash",
@@ -19,11 +19,11 @@ const drinks: Record<string, { title: string; content: React.ReactNode }> = {
   },
   piscosour: {
     title: "Pisco Sour",
-    content: (
-      <div>
-        Pisco, lemon, <b>egg white</b>, sugar, bitters
-      </div>
-    ),
+    content: <div>Pisco, lemon, egg white, sugar, bitters</div>,
+  },
+  maitai: {
+    title: "Mai Tai",
+    content: <div>Aged rum, dry cura&#xE7;ao, orgeat, lime, mint</div>,
   },
 };
 
