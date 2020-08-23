@@ -30,12 +30,22 @@ const IndexPage: React.FunctionComponent<{ data: DrinksQuery }> = ({
           id: "start",
           inTransition: "easeIn",
           outTransition: "easeOut",
+          height: 1,
         },
-        ...data.allSanityDrink.nodes.map((drink) => ({
-          id: drink.id,
-          inTransition: "easeIn" as const,
-          outTransition: "easeOut" as const,
-        })),
+        ...data.allSanityDrink.nodes
+          .slice(0, data.allSanityDrink.nodes.length - 1)
+          .map((drink) => ({
+            id: drink.id,
+            inTransition: "easeIn" as const,
+            outTransition: "easeOut" as const,
+            height: 1.5,
+          })),
+        ...data.allSanityDrink.nodes
+          .slice(data.allSanityDrink.nodes.length - 1)
+          .map((drink) => ({
+            id: drink.id,
+            inTransition: "easeIn" as const,
+          })),
       ]}
       render={(id, transitionData) => {
         const drink = data.allSanityDrink.nodes.find(
