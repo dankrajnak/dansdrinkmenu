@@ -1,6 +1,5 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import { useStaticQuery, graphql } from "gatsby";
 
 type Props = {
   description?: string;
@@ -9,26 +8,19 @@ type Props = {
   title: string;
 };
 
+const site = {
+  siteMetadata: {
+    description: "ok",
+    title: "title",
+  },
+};
+
 const SEO: React.FunctionComponent<Props> = ({
   description = "",
   lang = "en",
   meta = [],
   title,
 }) => {
-  const { site } = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
-        }
-      }
-    `
-  );
-
   const metaDescription = description || site.siteMetadata.description;
 
   return (
@@ -58,10 +50,6 @@ const SEO: React.FunctionComponent<Props> = ({
         {
           name: `twitter:card`,
           content: `summary`,
-        },
-        {
-          name: `twitter:creator`,
-          content: site.siteMetadata.author,
         },
         {
           name: `twitter:title`,
