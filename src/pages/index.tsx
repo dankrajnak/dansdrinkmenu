@@ -1,11 +1,10 @@
 import React from "react";
 import ScrollTransitions from "react-scroll-transitions";
-import { DrinksQuery } from "../../graphql-types";
 
 import Layout from "../components/layout";
 import SEO from "../components/seo";
 
-const IndexPage: React.FunctionComponent<{ data: DrinksQuery }> = ({ data }) =>
+const IndexPage: React.FunctionComponent<{ data: any }> = ({ data }) =>
   !data ? (
     <Layout>hi</Layout>
   ) : (
