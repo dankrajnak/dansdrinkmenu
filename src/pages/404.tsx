@@ -1,14 +1,15 @@
 import React from "react";
 
-import Layout from "../components/layout";
-import SEO from "../components/seo";
+import { useRouter } from "next/dist/client/router";
 
-const NotFoundPage: React.FunctionComponent = () => (
-  <Layout>
-    <SEO title="404: Not found" />
-    <h1>NOT FOUND</h1>
-    <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
-  </Layout>
-);
+const NotFoundPage: React.FunctionComponent = () => {
+  const router = useRouter();
+  React.useEffect(() => {
+    // Redirect to index.
+    router.replace("/");
+  });
+
+  return null;
+};
 
 export default NotFoundPage;

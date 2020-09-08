@@ -1,11 +1,30 @@
 import React from "react";
 import ScrollTransitions from "react-scroll-transitions";
-
+import { graphql } from "react-relay";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
+import { GetStaticProps } from "next";
+import { fetchQuery } from "relay-runtime";
+import environment from "../relay/environment";
+import { pagesIndexQueryResponse } from "../__generated__/pagesIndexQuery.graphql";
 
-const IndexPage: React.FunctionComponent<{ data: any }> = ({ data }) =>
-  !data ? (
+const query = graphql`
+  query pagesIndexQuery {
+    allDrink(sort: { order: ASC }) {
+      _id
+      name
+      description
+      instructions
+      order
+    }
+  }
+`;
+
+const IndexPage: React.FunctionComponent<{ data: pagesIndexQueryResponse }> = ({
+  data,
+}) => {
+  const drinks = data.allDrink;
+  return !data ? (
     <Layout>hi</Layout>
   ) : (
     <Layout>
@@ -18,32 +37,26 @@ const IndexPage: React.FunctionComponent<{ data: any }> = ({ data }) =>
             outTransition: "easeOut",
             height: 1,
           },
-          ...data.allSanityDrink.nodes
-            .slice(0, data.allSanityDrink.nodes.length - 1)
-            .map((drink) => ({
-              id: drink.id,
-              inTransition: "easeIn" as const,
-              outTransition: "easeOut" as const,
-              height: 1.5,
-            })),
-          ...data.allSanityDrink.nodes
-            .slice(data.allSanityDrink.nodes.length - 1)
-            .map((drink) => ({
-              id: drink.id,
-              inTransition: "easeIn" as const,
-            })),
+          ...drinks.slice(0, drinks.length - 1).map((drink, drinkIndex) => ({
+            id: drink._id || drinkIndex.toString(),
+            inTransition: "easeIn" as const,
+            outTransition: "easeOut" as const,
+            height: 1.5,
+          })),
+          ...drinks.slice(drinks.length - 1).map((drink) => ({
+            id: drink._id || drinks.length.toString(),
+            inTransition: "easeIn" as const,
+          })),
         ]}
         render={(id, transitionData) => {
-          const drink = data.allSanityDrink.nodes.find(
-            (drink) => drink.id === id
-          );
+          const drink = drinks.find((drink) => drink._id === id);
 
           let percent = transitionData.transitionPercent;
           if (id === "start") {
             percent = transitionData.leavingPercent;
           } else if (
-            data.allSanityDrink.nodes.findIndex((drink) => drink.id === id) ===
-            data.allSanityDrink.nodes.length - 1
+            drinks.findIndex((drink) => drink._id === id) ===
+            drinks.length - 1
           ) {
             percent = transitionData.enteringPercent;
           }
@@ -82,5 +95,15 @@ const IndexPage: React.FunctionComponent<{ data: any }> = ({ data }) =>
       />
     </Layout>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const env = environment();
+  return {
+    props: {
+      data: await fetchQuery(env, query, []),
+    },
+  };
+};
 
 export default IndexPage;
