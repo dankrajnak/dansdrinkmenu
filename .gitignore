@@ -55,9 +55,7 @@ typings/
 .env*
 
 # next files
-.cache/
 .next/
-public
 
 # Mac files
 .DS_Store
