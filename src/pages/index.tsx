@@ -79,7 +79,12 @@ const IndexPage: React.FunctionComponent<{ data: pagesIndexQueryResponse }> = ({
                 }}
               >
                 {id === "start" ? (
-                  <h1>Menu</h1>
+                  <h1>
+                    Menu{" "}
+                    <button onClick={() => (3 as any).breakIt()}>
+                      Break Everything
+                    </button>
+                  </h1>
                 ) : (
                   drink && (
                     <>
