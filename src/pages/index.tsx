@@ -103,6 +103,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       data: await fetchQuery(env, query, []),
     },
+    revalidate: 1,
   };
 };
 
