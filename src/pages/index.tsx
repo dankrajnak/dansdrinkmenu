@@ -24,9 +24,7 @@ const IndexPage: React.FunctionComponent<{ data: pagesIndexQueryResponse }> = ({
   data,
 }) => {
   const drinks = data.allDrink;
-  return !data ? (
-    <Layout>hi</Layout>
-  ) : (
+  return (
     <Layout>
       <SEO title="Menu" />
       <ScrollTransitions
@@ -79,7 +77,7 @@ const IndexPage: React.FunctionComponent<{ data: pagesIndexQueryResponse }> = ({
                 }}
               >
                 {id === "start" ? (
-                  <h1>Menu</h1>
+                  <h1>Thanks, Julia</h1>
                 ) : (
                   drink && (
                     <>
